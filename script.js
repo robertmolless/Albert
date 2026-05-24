@@ -5,7 +5,10 @@ const ctx = confettiCanvas.getContext("2d");
 const state = {
   step: 0,
   confetti: [],
-  runningConfetti: false
+  runningConfetti: false,
+  audioCtx: null,
+  musicEnabled: false,
+  musicTimers: []
 };
 
 const steps = [
@@ -23,14 +26,20 @@ const steps = [
   renderWish
 ];
 
+function wrap(html) {
+  return `<div class="screen-inner">${html}</div>`;
+}
+
 function setScreen(html) {
-  screen.innerHTML = html;
+  screen.innerHTML = wrap(html);
   screen.classList.remove("fade-in");
   void screen.offsetWidth;
   screen.classList.add("fade-in");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function next() {
+  if (!state.musicEnabled) playMusic();
   state.step = Math.min(state.step + 1, steps.length - 1);
   steps[state.step]();
 }
@@ -56,8 +65,8 @@ function renderStart() {
       <p>Требуется диагностика и восстановление праздничного протокола.</p>
     </div>
 
-    <div class="spacer"></div>
     <button class="btn" onclick="next()">Начать диагностику</button>
+    <button class="btn btn-small" onclick="toggleMusic()">Музыка: включить</button>
   `);
 }
 
@@ -68,9 +77,9 @@ function renderDiagnostic() {
 
     <div class="card">
       ${meter("Харизма", 97)}
-      ${meter("Уровень адекватности", 62)}
+      ${meter("Адекватность", 62)}
       ${meter("Запас энергии", 41)}
-      ${meter("Способность творить дичь", 99)}
+      ${meter("Творить дичь", 99)}
       ${meter("Уровень дружбы", 100)}
       ${meter("Любовь к еде", 95)}
       ${meter("Сон 8 часов", 4)}
@@ -80,7 +89,6 @@ function renderDiagnostic() {
       <p class="type" id="typed"></p>
     </div>
 
-    <div class="spacer"></div>
     <button class="btn" onclick="next()">Продолжить</button>
   `);
   typeText("Диагностика почти завершена. Обнаружен подозрительно высокий уровень легендарности.", "typed");
@@ -106,7 +114,6 @@ function renderSearchAlbert() {
       <div class="progress"><div></div></div>
     </div>
 
-    <div class="spacer"></div>
     <button class="btn" onclick="next()">Открыть результат</button>
   `);
 }
@@ -151,7 +158,6 @@ function renderSearchGroup() {
       <div class="progress"><div></div></div>
     </div>
 
-    <div class="spacer"></div>
     <button class="btn" onclick="next()">Открыть архив</button>
   `);
 }
@@ -192,7 +198,6 @@ function renderAnalysisDone() {
 
     <div class="hero-icon">✅</div>
 
-    <div class="spacer"></div>
     <button class="btn" onclick="next()">Исправить ошибку</button>
   `);
 }
@@ -212,7 +217,6 @@ function renderAgeError() {
       <p>Решение: принять поздравления, подарки и внимание.</p>
     </div>
 
-    <div class="spacer"></div>
     <button class="btn btn-red" onclick="next()">Продолжить</button>
   `);
 }
@@ -236,7 +240,6 @@ function renderPatch() {
       <p>Установка завершена! 🎉</p>
     </div>
 
-    <div class="spacer"></div>
     <button class="btn" onclick="next()">Перезагрузить систему</button>
   `);
 }
@@ -256,7 +259,6 @@ function renderSystemRestored() {
       <p>Версия: 27.0.</p>
     </div>
 
-    <div class="spacer"></div>
     <button class="btn" onclick="next()">Открыть поздравление</button>
   `);
 }
@@ -264,8 +266,6 @@ function renderSystemRestored() {
 function renderCongrats() {
   startConfetti();
   setScreen(`
-    <div class="spacer"></div>
-
     <div class="final-title">С днем<br>рождения!</div>
     <div class="cake">🎂</div>
 
@@ -297,8 +297,10 @@ function renderWish() {
       <p class="yellow">Спасибо, что ты есть! ❤️</p>
     </div>
 
-    <div class="spacer"></div>
-    <button class="btn" onclick="restart()">Запустить заново</button>
+    <div class="music-row">
+      <button class="btn" onclick="restart()">Заново</button>
+      <button class="btn" onclick="toggleMusic()">Музыка</button>
+    </div>
   `);
 }
 
@@ -321,6 +323,93 @@ function typeText(text, id) {
     i += 1;
     if (i > text.length) clearInterval(timer);
   }, 22);
+}
+
+function toggleMusic() {
+  if (state.musicEnabled) {
+    stopMusic();
+  } else {
+    playMusic();
+  }
+}
+
+function playMusic() {
+  stopMusic();
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+
+  const audioCtx = new AudioContext();
+  state.audioCtx = audioCtx;
+  state.musicEnabled = true;
+
+  const melody = [
+    ["G4", .35], ["G4", .2], ["A4", .5], ["G4", .5], ["C5", .5], ["B4", .9],
+    ["G4", .35], ["G4", .2], ["A4", .5], ["G4", .5], ["D5", .5], ["C5", .9],
+    ["G4", .35], ["G4", .2], ["G5", .5], ["E5", .5], ["C5", .5], ["B4", .5], ["A4", .9],
+    ["F5", .35], ["F5", .2], ["E5", .5], ["C5", .5], ["D5", .5], ["C5", 1.1]
+  ];
+
+  let time = audioCtx.currentTime + .05;
+  const tempoGap = .04;
+
+  function scheduleOnce(startOffset = 0) {
+    let t = audioCtx.currentTime + .05 + startOffset;
+    melody.forEach(([note, duration]) => {
+      makeTone(noteFreq(note), t, duration * .9);
+      t += duration + tempoGap;
+    });
+    return t - audioCtx.currentTime;
+  }
+
+  const loopDuration = scheduleOnce(0);
+  const loop = () => {
+    if (!state.musicEnabled) return;
+    scheduleOnce(0);
+    const timer = setTimeout(loop, loopDuration * 1000);
+    state.musicTimers.push(timer);
+  };
+
+  const timer = setTimeout(loop, loopDuration * 1000);
+  state.musicTimers.push(timer);
+}
+
+function stopMusic() {
+  state.musicEnabled = false;
+  state.musicTimers.forEach(clearTimeout);
+  state.musicTimers = [];
+  if (state.audioCtx) {
+    state.audioCtx.close().catch(() => {});
+    state.audioCtx = null;
+  }
+}
+
+function makeTone(freq, start, duration) {
+  const audioCtx = state.audioCtx;
+  if (!audioCtx) return;
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = "triangle";
+  osc.frequency.setValueAtTime(freq, start);
+
+  gain.gain.setValueAtTime(0, start);
+  gain.gain.linearRampToValueAtTime(.08, start + .025);
+  gain.gain.linearRampToValueAtTime(.055, start + duration * .75);
+  gain.gain.linearRampToValueAtTime(0, start + duration);
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start(start);
+  osc.stop(start + duration + .04);
+}
+
+function noteFreq(note) {
+  const notes = {
+    C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88,
+    C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99
+  };
+  return notes[note] || 440;
 }
 
 function resizeConfetti() {
