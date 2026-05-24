@@ -1,0 +1,423 @@
+:root {
+  --bg: #020403;
+  --panel: rgba(5, 20, 10, .76);
+  --green: #44ff63;
+  --soft-green: #a9ffae;
+  --red: #ff3d3d;
+  --yellow: #ffd95a;
+  --white: #f6fff6;
+  --muted: rgba(226, 255, 226, .74);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #020403;
+  color: var(--green);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+.background-glow {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(68, 255, 99, .22), transparent 38%),
+    radial-gradient(circle at 20% 85%, rgba(68, 255, 99, .12), transparent 34%),
+    linear-gradient(180deg, #061207, #020403 58%, #000);
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .16;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
+  background-size: 4px 4px;
+  mix-blend-mode: screen;
+}
+
+.shell {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.iphone {
+  width: min(430px, 100%);
+  height: min(900px, calc(100dvh - 24px));
+  border: 2px solid rgba(130, 255, 145, .24);
+  border-radius: 38px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .045), transparent 24%),
+    rgba(0, 0, 0, .9);
+  box-shadow:
+    0 0 44px rgba(68, 255, 99, .18),
+    inset 0 0 26px rgba(68, 255, 99, .08);
+  position: relative;
+}
+
+.statusbar {
+  height: 46px;
+  padding: 14px 22px 0;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-size: 13px;
+  opacity: .92;
+}
+
+.screen {
+  height: calc(100% - 70px);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.homebar {
+  width: 134px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .86);
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(28px, 7vw, 40px);
+  line-height: 1.05;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-shadow: 0 0 15px rgba(68, 255, 99, .48);
+}
+
+h2 {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(68, 255, 99, .36);
+}
+
+p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 15px;
+}
+
+.small {
+  font-size: 13px;
+  opacity: .82;
+}
+
+.card {
+  border: 1px solid rgba(68, 255, 99, .46);
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow:
+    inset 0 0 20px rgba(68, 255, 99, .08),
+    0 0 18px rgba(68, 255, 99, .08);
+}
+
+.alert-card {
+  border-color: rgba(255, 61, 61, .62);
+  box-shadow:
+    inset 0 0 20px rgba(255, 61, 61, .08),
+    0 0 18px rgba(255, 61, 61, .08);
+}
+
+.red {
+  color: var(--red);
+  text-shadow: 0 0 12px rgba(255, 61, 61, .36);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.center {
+  text-align: center;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.btn {
+  width: 100%;
+  min-height: 54px;
+  border: 1px solid rgba(68, 255, 99, .72);
+  background: rgba(8, 30, 13, .82);
+  color: var(--green);
+  border-radius: 12px;
+  text-transform: uppercase;
+  box-shadow: 0 0 18px rgba(68, 255, 99, .14);
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(.98);
+}
+
+.btn-red {
+  border-color: rgba(255, 61, 61, .72);
+  color: var(--red);
+  background: rgba(34, 8, 8, .82);
+}
+
+.hero-icon {
+  display: grid;
+  place-items: center;
+  font-size: 78px;
+  min-height: 132px;
+  filter: drop-shadow(0 0 16px rgba(68, 255, 99, .32));
+}
+
+.warning-triangle {
+  width: 116px;
+  height: 100px;
+  margin: 10px auto;
+  position: relative;
+}
+
+.warning-triangle:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  border-radius: 10px;
+  background: rgba(255, 61, 61, .12);
+  border: 3px solid var(--red);
+  filter: drop-shadow(0 0 12px rgba(255, 61, 61, .5));
+}
+
+.warning-triangle:after {
+  content: "!";
+  position: absolute;
+  inset: 15px 0 0;
+  text-align: center;
+  color: var(--red);
+  font-size: 58px;
+  font-weight: 800;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 10px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(68, 255, 99, .14);
+  border: 1px solid rgba(68, 255, 99, .24);
+}
+
+.fill {
+  height: 100%;
+  width: var(--w);
+  background: linear-gradient(90deg, rgba(68, 255, 99, .65), var(--green));
+  box-shadow: 0 0 12px rgba(68, 255, 99, .5);
+}
+
+.photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(169, 255, 174, .44);
+  box-shadow: 0 0 22px rgba(68, 255, 99, .15);
+  background: #111;
+}
+
+.photo.tall {
+  aspect-ratio: 4 / 5;
+  object-position: 50% 25%;
+}
+
+.grid-lines {
+  position: relative;
+  min-height: 250px;
+  display: grid;
+  place-items: center;
+}
+
+.radar {
+  width: min(250px, 72vw);
+  aspect-ratio: 1;
+  border: 1px solid rgba(68, 255, 99, .65);
+  border-radius: 50%;
+  position: relative;
+  background:
+    radial-gradient(circle, rgba(68, 255, 99, .22) 0 2px, transparent 3px),
+    repeating-radial-gradient(circle, transparent 0 34px, rgba(68, 255, 99, .22) 35px 36px),
+    linear-gradient(90deg, transparent 49.5%, rgba(68, 255, 99, .25) 50%, transparent 50.5%),
+    linear-gradient(0deg, transparent 49.5%, rgba(68, 255, 99, .25) 50%, transparent 50.5%);
+  box-shadow: 0 0 28px rgba(68, 255, 99, .18);
+  overflow: hidden;
+}
+
+.radar:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(from 0deg, rgba(68, 255, 99, .42), transparent 26%);
+  border-radius: 50%;
+  animation: spin 2.8s linear infinite;
+}
+
+.dot {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px rgba(68, 255, 99, .8);
+  z-index: 2;
+}
+
+.d1 { left: 47%; top: 22%; }
+.d2 { left: 24%; top: 54%; }
+.d3 { left: 68%; top: 58%; }
+.d4 { left: 58%; top: 36%; }
+.d5 { left: 37%; top: 72%; }
+
+.progress {
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(68, 255, 99, .12);
+  border: 1px solid rgba(68, 255, 99, .25);
+}
+
+.progress div {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(68, 255, 99, .62), var(--green));
+  animation: load 2.2s ease forwards;
+}
+
+.type {
+  min-height: 22px;
+  white-space: pre-wrap;
+}
+
+.final-title {
+  font-size: clamp(38px, 12vw, 64px);
+  line-height: .98;
+  text-align: center;
+  color: white;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, .52),
+    0 0 28px rgba(68, 255, 99, .45);
+}
+
+.cake {
+  font-size: 82px;
+  text-align: center;
+  filter: drop-shadow(0 0 18px rgba(255, 217, 90, .45));
+}
+
+.fade-in {
+  animation: fadeIn .32s ease both;
+}
+
+.slide-up {
+  animation: slideUp .36s ease both;
+}
+
+.glitch {
+  animation: glitch .75s steps(2, end) infinite;
+}
+
+#confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes load {
+  to { width: 100%; }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  25% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  75% { transform: translate(2px, 1px); }
+  100% { transform: translate(0); }
+}
+
+@media (max-height: 740px) {
+  .screen {
+    padding: 16px;
+    gap: 11px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 13px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .hero-icon {
+    min-height: 92px;
+    font-size: 56px;
+  }
+}
