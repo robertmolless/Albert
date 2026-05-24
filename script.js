@@ -159,7 +159,7 @@ function renderEnvironmentSearch() {
     </div>
 
     <div class="card">
-      <p>Найдено: <b class="pink">7 человек</b>.</p>
+      <p>Найдено: <b class="pink">10+ человек</b>.</p>
       <p>Статус: лучший круг.</p>
       <br>
       <p>Анализ связей...</p>
@@ -180,7 +180,7 @@ function renderMemories() {
 
     <div class="card">
       <p>Обнаружено: много фотографий.</p>
-      <p>Найдено: 7 человек.</p>
+      <p>Найдено: 10+ человек.</p>
       <p>Уровень воспоминаний: максимальный.</p>
     </div>
 
@@ -204,7 +204,7 @@ function renderAchievements() {
     </div>
 
     <div class="card card-soft">
-      <p>Уровень легендарности: <b class="pink">MAX</b></p>
+      <p>Уровень легендарности: <b class="pink">100%</b></p>
       <div class="progress"><div></div></div>
     </div>
 
@@ -228,7 +228,6 @@ function renderSecretFile() {
     </div>
 
     <button class="btn" onclick="next()">Подтвердить дружбу</button>
-    <button class="btn btn-ghost" onclick="next()">Не сейчас</button>
   `);
 }
 
@@ -261,13 +260,20 @@ function renderFinal() {
   startConfetti();
   setScreen(`
     ${kicker(9, "финальное пожелание")}
-    <h2 class="final-title title-gradient">С днем рождения, Альберт!</h2>
-    <p class="center">24 мая • 27 лет</p>
 
     <img class="final-image" src="assets/final_birthday_v6.png?v=6" alt="С днем рождения, Альберт">
 
-    <div class="card center">
-      <p>Поздравление подготовлено и доставлено.</p>
+    <div class="card">
+      <div class="wish-list">
+        ${wish("🦋", "Ярких идей и смелости их воплощать.")}
+        ${wish("⭐", "Крепкого здоровья для любых побед.")}
+        ${wish("🔥", "Энергии бесконечной.")}
+        ${wish("🌙", "Настроения на максимуме.")}
+        ${wish("🫶", "Друзей рядом и на связи.")}
+        ${wish("🎉", "Приключений незабываемых.")}
+      </div>
+      <br>
+      <p>Пусть каждый день будет как праздник, а жизнь как лучшая игра.</p>
       <br>
       <p class="pink"><b>Спасибо, что ты есть! ❤️</b></p>
     </div>
