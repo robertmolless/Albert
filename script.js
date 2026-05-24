@@ -530,7 +530,7 @@ function renderPatch() {
       ${meter("🫶", t("love"), 100)}
       ${meter("🛡️", t("protection"), 100)}
     </div>
-    <div class="cat-wrap"><img class="cat-img" src="${state.lang === 'jp' ? 'assets/group_cat_model_jp.webp?v=17' : 'assets/group_cat_model.webp?v=13'}" alt="Patch"></div>
+    <div class="cat-wrap"><img class="cat-img" src="${state.lang === 'jp' ? 'assets/group_cat_model_jp.webp?v=17' : 'assets/group_cat_model_ru_v2.webp?v=19'}" alt="Patch"></div>
     <div class="card center"><p><b class="neon-green">${t("installed")}</b></p><p>${t("active")}</p></div>
     <button class="btn" onclick="next()">${t("openGreeting")}</button>
   `);
@@ -540,7 +540,7 @@ function renderFinal() {
   startConfetti();
   setScreen(`
     ${topLine(11, "final")}
-    <div class="image-frame"><img class="final-img" src="${state.lang === 'jp' ? 'assets/final_jp.webp?v=16' : 'assets/final.webp?v=10'}" alt="Final"></div>
+    <div class="image-frame"><img class="final-img" src="${state.lang === 'jp' ? 'assets/final_jp.webp?v=16' : 'assets/final_ru_v3.webp?v=20'}" alt="Final"></div>
     <div class="card card-pink">
       <div class="wish-list">
         ${wish("🦋", t("wish1"))}${wish("⭐", t("wish2"))}${wish("🔥", t("wish3"))}
@@ -751,9 +751,11 @@ function preloadImages() {
   [
     "assets/profile.webp?v=10",
     "assets/final.webp?v=10",
+    "assets/final_ru_v3.webp?v=20",
     "assets/final_jp.webp?v=16",
     "assets/memories.webp?v=10",
     "assets/group_cat_model.webp?v=13",
+    "assets/group_cat_model_ru_v2.webp?v=19",
     "assets/group_cat_model_jp.webp?v=17",
     "assets/success_cat_model.webp?v=13",
     "assets/error_cat_model.webp?v=13"
