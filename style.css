@@ -805,3 +805,49 @@ p {
 .start-card {
   margin-top: 4px;
 }
+
+.lang-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 5px;
+  border: 1px solid rgba(255, 140, 198, .25);
+  border-radius: 18px;
+  background: rgba(255, 140, 198, .06);
+}
+
+.lang-switch button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 13px;
+  color: var(--pink-soft);
+  background: transparent;
+  font-weight: 1000;
+  letter-spacing: .08em;
+}
+
+.lang-switch button.active {
+  color: #180718;
+  background: linear-gradient(180deg, #ffd5eb, #ff8cc6);
+  box-shadow: 0 8px 22px rgba(255, 140, 198, .2);
+}
+
+.jp-mode {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", "Segoe UI", sans-serif;
+}
+
+.jp-mode h1,
+.jp-mode h2 {
+  letter-spacing: -.02em;
+  line-height: 1.08;
+}
+
+.jp-mode p {
+  line-height: 1.62;
+}
+
+.jp-mode .row strong,
+.jp-mode .stat,
+.jp-mode .achievement b {
+  font-size: 13px;
+}
