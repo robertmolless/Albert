@@ -259,20 +259,24 @@ function renderAchievements() {
 
 function renderSecretFile() {
   setScreen(`
-    ${topLine(8, "секретный файл")}
-    <h2 class="neon-green">Секретный файл</h2>
+    ${topLine(8, "анализ завершен")}
+    <h2 class="neon-green">Анализ завершен</h2>
 
-    <div class="secret-folder"></div>
-
-    <div class="card card-pink center">
-      <p>Найден файл:</p>
-      <p class="neon-pink"><b>ALBERT_27_SECRET.DAT</b></p>
+    <div class="card">
+      <p>Вывод системы:</p>
       <br>
-      <p>Доступ ограничен.</p>
-      <p>Требуется подтверждение дружбы.</p>
+      <p><b class="neon-green">Этот человек причина множества крутых моментов, смеха, дичи и воспоминаний.</b></p>
+      <br>
+      <p><b class="neon-green">Ценность для вселенной: неизмеримо высока.</b></p>
+      <br>
+      <p>Рекомендуется: поздравить, обнять, угостить и радовать.</p>
     </div>
 
-    <button class="btn btn-pink" onclick="next()">Подтвердить дружбу</button>
+    <div class="cat-wrap">
+      <img class="cat-img" src="assets/success_cat.webp?v=10" alt="Анализ завершен">
+    </div>
+
+    <button class="btn" onclick="next()">Все в порядке!</button>
   `);
 }
 
