@@ -39,8 +39,7 @@ const steps = [
   renderSecretFile,
   renderAgeError,
   renderPatch,
-  renderFinal,
-  renderDelivered
+  renderFinal
 ];
 
 function panel(html) {
@@ -273,7 +272,7 @@ function renderSecretFile() {
     </div>
 
     <div class="cat-wrap">
-      <img class="cat-img" src="assets/success_cat.webp?v=10" alt="Анализ завершен">
+      <img class="cat-img" src="assets/success_cat_model.webp?v=13" alt="Анализ завершен">
     </div>
 
     <button class="btn" onclick="next()">Все в порядке!</button>
@@ -297,7 +296,7 @@ function renderAgeError() {
     </div>
 
     <div class="cat-wrap">
-      <img class="cat-img small" src="assets/error_cat.webp?v=10" alt="Ошибка">
+      <img class="cat-img small" src="assets/error_cat_model.webp?v=13" alt="Ошибка">
     </div>
 
     <button class="btn btn-red" onclick="next()">Понятно</button>
@@ -321,7 +320,7 @@ function renderPatch() {
     </div>
 
     <div class="cat-wrap">
-      <img class="cat-img" src="assets/group_cat.webp?v=10" alt="Праздничный патч">
+      <img class="cat-img" src="assets/group_cat_model.webp?v=13" alt="Праздничный патч">
     </div>
 
     <div class="card center">
@@ -357,34 +356,14 @@ function renderFinal() {
       <p class="neon-green"><b>Спасибо, что ты есть! ❤️</b></p>
     </div>
 
-    <button class="btn btn-pink" onclick="next()">Принять подарок</button>
-  `);
-}
-
-function renderDelivered() {
-  startConfetti();
-  setScreen(`
-    ${topLine(12, "конец протокола")}
-    <h2 class="gradient-title center">Поздравление доставлено</h2>
-
-    <div class="cat-wrap">
-      <img class="cat-img" src="assets/success_cat.webp?v=10" alt="Поздравление доставлено">
-    </div>
-
-    <div class="card center">
-      <p>Статус: принято сердцем.</p>
-      <br>
-      <p>Альберт официально стал на 1 уровень мощнее.</p>
-      <br>
-      <p class="neon-pink"><b>С днем рождения!</b></p>
-    </div>
-
     <div class="music-row">
       <button class="btn" onclick="restart()">Заново</button>
       <button class="btn btn-ghost" onclick="toggleMusic()">Музыка</button>
     </div>
   `);
 }
+
+
 
 function meter(icon, label, value) {
   return `
@@ -601,9 +580,9 @@ function preloadImages() {
     "assets/profile.webp?v=10",
     "assets/final.webp?v=10",
     "assets/memories.webp?v=10",
-    "assets/group_cat.webp?v=10",
-    "assets/success_cat.webp?v=10",
-    "assets/error_cat.webp?v=10"
+    "assets/group_cat_model.webp?v=13",
+    "assets/success_cat_model.webp?v=13",
+    "assets/error_cat_model.webp?v=13"
   ].forEach(src => {
     const img = new Image();
     img.src = src;

@@ -458,8 +458,8 @@ p {
 .cat-img {
   display: block;
   width: 100%;
-  border-radius: 21px;
-  background: rgba(0,0,0,.3);
+  border-radius: 0;
+  background: transparent;
 }
 
 .profile-img {
@@ -482,16 +482,30 @@ p {
   display: grid;
   place-items: center;
   margin: 2px 0;
+  min-height: 220px;
 }
 
 .cat-img {
   width: min(270px, 72vw);
   object-fit: contain;
-  box-shadow: 0 0 34px rgba(255,140,198,.12);
+  filter:
+    drop-shadow(0 0 12px rgba(255, 228, 138, .28))
+    drop-shadow(0 18px 28px rgba(0, 0, 0, .48));
+  animation: floatModel 3.8s ease-in-out infinite;
 }
 
 .cat-img.small {
   width: min(220px, 60vw);
+}
+
+.model-stage {
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 60%, rgba(255, 228, 138, .16), transparent 42%),
+    radial-gradient(circle at 50% 70%, rgba(99, 255, 120, .12), transparent 48%);
 }
 
 .stat-grid {
@@ -723,4 +737,9 @@ p {
   .profile-img {
     max-height: 44dvh;
   }
+}
+
+@keyframes floatModel {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-7px) scale(1.015); }
 }
