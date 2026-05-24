@@ -78,12 +78,18 @@ function restart() {
 function renderStart() {
   setScreen(`
     ${topLine(1, "старт")}
-    <h1 class="neon-green">Система поздравлений</h1>
-    <p class="jp">誕生日プロトコル</p>
 
-    <div class="warning">!</div>
+    <div class="start-hero">
+      <div class="start-badge">誕生日プロトコル</div>
+      <h1 class="neon-green">Система<br>поздравлений</h1>
+      <p>Праздничный протокол для Альберта запущен.</p>
+    </div>
 
-    <div class="card card-red">
+    <div class="alert-orb">
+      <div class="alert-mark">!</div>
+    </div>
+
+    <div class="card card-red start-card">
       <p><b class="neon-pink">Критический сбой:</b> День рождения.</p>
       <br>
       <p>Возраст пользователя Альберт увеличен на 1 год.</p>
@@ -92,8 +98,6 @@ function renderStart() {
       <br>
       <p>Требуется диагностика и восстановление праздничного протокола.</p>
     </div>
-
-    <div class="japan-scene"></div>
 
     <button class="btn" onclick="next()">Запустить диагностику</button>
     <button class="btn btn-ghost" id="musicBtn" onclick="toggleMusic()">Музыка: включить</button>
