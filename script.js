@@ -540,7 +540,7 @@ function renderFinal() {
   startConfetti();
   setScreen(`
     ${topLine(11, "final")}
-    <div class="image-frame"><img class="final-img" src="assets/final.webp?v=10" alt="Final"></div>
+    <div class="image-frame"><img class="final-img" src="${state.lang === 'jp' ? 'assets/final_jp.webp?v=16' : 'assets/final.webp?v=10'}" alt="Final"></div>
     <div class="card card-pink">
       <div class="wish-list">
         ${wish("🦋", t("wish1"))}${wish("⭐", t("wish2"))}${wish("🔥", t("wish3"))}
@@ -751,6 +751,7 @@ function preloadImages() {
   [
     "assets/profile.webp?v=10",
     "assets/final.webp?v=10",
+    "assets/final_jp.webp?v=16",
     "assets/memories.webp?v=10",
     "assets/group_cat_model.webp?v=13",
     "assets/success_cat_model.webp?v=13",
