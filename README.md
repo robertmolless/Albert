@@ -1,21 +1,27 @@
-# Поздравление для Альберта v6 verified
+# Поздравление для Альберта anime version
 
-Проверено:
-- экран "Альберт найден" ведет на assets/profile_albert_v6.png?v=6
-- финальный экран ведет на assets/final_birthday_v6.png?v=6
-- старые фото albert_anime_card.jpg, final_card.jpg, albert_original.jpg удалены из assets
-- старые albert_anime_card.png и final_card.png удалены, чтобы GitHub не подхватил не тот файл
-- memories.jpg оставлен для архива воспоминаний
-- happy_birthday.mp3 оставлен для музыки
+Что изменено:
+- новый японский / аниме дизайн;
+- добавлен архив воспоминаний с фото полароидов;
+- фото архива можно открыть и приблизить пальцами на iPhone;
+- сохранена музыка assets/happy_birthday.mp3;
+- найдено 7 человек;
+- финальный текст от одного человека: "Желаю".
 
-Важно:
-Если на GitHub Pages все еще видны старые фото, это кеш браузера или Pages.
-Открой ссылку с параметром ?v=6 или обнови страницу через перезапуск Telegram WebApp.
+## Файлы
 
+index.html
+style.css
+script.js
+assets/albert.jpg
+assets/memories.jpg
+assets/happy_birthday.mp3
 
-v7 text fixed:
-- "Найдено: 7 человек" заменено на "Найдено: 10+ человек"
-- "Уровень легендарности: MAX" заменено на "100%"
-- в секретном файле убрана кнопка "Не сейчас"
-- на финальном экране убран заголовок "С днем рождения, Альберт"
-- пожелания под финальной картинкой возвращены
+## GitHub Pages
+
+Загрузи все файлы в корень репозитория.
+Settings -> Pages -> Deploy from a branch -> main -> /root.
+
+## Telegram
+
+В боте укажи ссылку GitHub Pages как Web App.
