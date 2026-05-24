@@ -123,7 +123,7 @@ function renderProfile() {
     <h2 class="title-gradient">Альберт найден</h2>
 
     <div class="profile-image-wrap">
-      <img class="profile-image" src="assets/albert_anime_card.png" alt="Альберт">
+      <img class="profile-image" src="assets/profile_albert_v6.png?v=6" alt="Альберт">
     </div>
 
     <div class="card">
@@ -264,7 +264,7 @@ function renderFinal() {
     <h2 class="final-title title-gradient">С днем рождения, Альберт!</h2>
     <p class="center">24 мая • 27 лет</p>
 
-    <img class="final-image" src="assets/final_card.png" alt="С днем рождения, Альберт">
+    <img class="final-image" src="assets/final_birthday_v6.png?v=6" alt="С днем рождения, Альберт">
 
     <div class="card center">
       <p>Поздравление подготовлено и доставлено.</p>
