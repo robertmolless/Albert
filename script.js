@@ -26,31 +26,27 @@ const state = {
   }
 };
 
-if (birthdayMusic) {
-  birthdayMusic.volume = 0.48;
-}
+if (birthdayMusic) birthdayMusic.volume = 0.5;
 
 const steps = [
   renderStart,
   renderDiagnostic,
-  renderSearchAlbert,
-  renderAlbertFound,
-  renderSearchGroup,
-  renderMemoriesFound,
-  renderAnalysisDone,
-  renderAgeError,
+  renderProfile,
+  renderEnvironmentSearch,
+  renderMemories,
+  renderAchievements,
+  renderSecretFile,
   renderPatch,
-  renderSystemRestored,
-  renderCongrats,
-  renderWish
+  renderFinal,
+  renderDelivered
 ];
 
 function panel(html) {
-  return `<div class="panel">${html}</div>`;
+  return `<section class="panel">${html}</section>`;
 }
 
-function stepLabel(num, text) {
-  return `<div class="step-label"><span>${num}</span>${text}</div>`;
+function kicker(num, text) {
+  return `<div class="kicker"><span>${num}</span>${text}</div>`;
 }
 
 function setScreen(html) {
@@ -75,120 +71,98 @@ function restart() {
 
 function renderStart() {
   setScreen(`
-    ${stepLabel(1, "старт")}
-    <h1>Система поздравлений</h1>
-    <p class="jp">誕生日プロトコル</p>
+    ${kicker(1, "запуск системы")}
+    <h1 class="title-gradient">Система поздравлений</h1>
+    <p class="jp">お誕生日プロトコル</p>
 
-    <div class="warning"></div>
+    <div class="warning">!</div>
 
-    <div class="card alert-card">
-      <p class="red">Критический сбой: День рождения.</p>
+    <div class="card card-danger">
+      <p><b class="red">Критический сбой:</b> День рождения.</p>
       <br>
       <p>Возраст пользователя Альберт увеличен на 1 год.</p>
       <p>Дата события: 24 мая.</p>
-      <p>Новая версия: 27.0.</p>
-      <br>
-      <p>Требуется диагностика и восстановление праздничного протокола.</p>
+      <p>Версия: 27.0.</p>
     </div>
 
-    <div class="mount"></div>
+    <div class="hero-scene"></div>
 
-    <button class="btn" onclick="next()">Запустить диагностику</button>
-    <button class="btn btn-pink btn-small" id="musicBtn" onclick="toggleMusic()">Музыка: включить</button>
+    <button class="btn" onclick="next()">Запустить систему</button>
+    <button class="btn btn-ghost" id="musicBtn" onclick="toggleMusic()">Музыка: включить</button>
   `);
 }
 
 function renderDiagnostic() {
   setScreen(`
-    ${stepLabel(2, "диагностика")}
+    ${kicker(2, "диагностика")}
     <h2>Диагностика системы</h2>
-    <p>Проверяем жизненно важные параметры...</p>
+    <p>Проверяем важные параметры перед запуском праздничного протокола.</p>
 
-    <div class="card card-green">
-      ${meter("Харизма", 97)}
-      ${meter("Адекватность", 62)}
-      ${meter("Запас энергии", 41)}
-      ${meter("Творить дичь", 99)}
-      ${meter("Уровень дружбы", 100)}
-      ${meter("Любовь к еде", 95)}
-      ${meter("Сон 8 часов", 4)}
+    <div class="card card-soft">
+      ${meter("Анализ данных", 100)}
+      ${meter("Проверка личности", 100)}
+      ${meter("Совместимость", 100)}
+      ${meter("Уровень легендарности", 100)}
+      ${meter("Запас позитива", 100)}
+      ${meter("Протокол дружбы", 100)}
+      ${meter("Чувство юмора", 100)}
     </div>
 
-    <div class="card">
-      <p class="type" id="typed"></p>
+    <div class="card card-success">
+      <p><b>Диагностика завершена.</b></p>
+      <p>Статус: отлично.</p>
     </div>
 
     <button class="btn" onclick="next()">Продолжить</button>
   `);
-  typeText("Диагностика почти завершена. Обнаружен подозрительно высокий уровень легендарности.", "typed");
 }
 
-function renderSearchAlbert() {
+function renderProfile() {
   setScreen(`
-    ${stepLabel(3, "поиск личности")}
-    <h2>Поиск личности</h2>
-    <p>Сканируем базу данных легендарных личностей...</p>
+    ${kicker(3, "личность найдена")}
+    <h2 class="title-gradient">Альберт найден</h2>
 
-    <div class="radar-wrap">
-      <div class="radar">
-        <span class="dot d1">🐱</span>
-        <span class="dot d2">🌸</span>
-        <span class="dot d3">✨</span>
-        <span class="dot d4">🍜</span>
-        <span class="dot d5">🎂</span>
+    <div class="profile-image-wrap">
+      <img class="profile-image" src="assets/albert_anime_card.png" alt="Альберт">
+    </div>
+
+    <div class="card">
+      <div class="stat-grid">
+        <div class="stat"><span>Имя</span><span>Альберт</span></div>
+        <div class="stat"><span>Статус</span><span>главный персонаж</span></div>
+        <div class="stat"><span>Возраст</span><span>27 лет</span></div>
+        <div class="stat"><span>Редкость</span><span>легендарная</span></div>
+        <div class="stat"><span>Опасность</span><span>высокая, но в хорошем смысле</span></div>
       </div>
     </div>
 
-    <div class="card card-green">
-      <p>Поиск совпадений: 87%</p>
-      <div class="progress"><div></div></div>
-    </div>
-
-    <button class="btn" onclick="next()">Открыть результат</button>
+    <button class="btn" onclick="next()">Продолжить</button>
   `);
 }
 
-function renderAlbertFound() {
+function renderEnvironmentSearch() {
   setScreen(`
-    ${stepLabel(4, "Альберт найден")}
-    <h2>Личность найдена!</h2>
+    ${kicker(4, "окружение")}
+    <h2>Окружение обнаружено</h2>
+    <p>Сканируем ближайший круг и архив совместных воспоминаний.</p>
 
-    <img class="photo tall" src="assets/albert.jpg" alt="Альберт">
-
-    <div class="card">
-      <p>Имя: <span class="yellow">Альберт</span></p>
-      <p>Статус: главный персонаж</p>
-      <p>Возраст: 27 лет</p>
-      <p>Редкость: легендарный</p>
-      <p>Уровень крутости: ██████████ 100%</p>
-      <p>Опасность: высокая, но в хорошем смысле</p>
-    </div>
-
-    <button class="btn" onclick="next()">Продолжить анализ</button>
-  `);
-}
-
-function renderSearchGroup() {
-  setScreen(`
-    ${stepLabel(5, "поиск окружения")}
-    <h2>Поиск окружения</h2>
-    <p>Анализ социальных связей и ближайшего круга...</p>
-
-    <div class="radar-wrap">
-      <div class="radar">
-        <span class="dot d1">🐱</span>
-        <span class="dot d2">🌸</span>
+    <div class="radar">
+      <div class="radar-circle">
+        <span class="dot d1">🌸</span>
+        <span class="dot d2">🎂</span>
         <span class="dot d3">✨</span>
-        <span class="dot d4">🍜</span>
-        <span class="dot d5">🎂</span>
+        <span class="dot d4">🫶</span>
+        <span class="dot d5">📸</span>
         <span class="dot d6">🎮</span>
         <span class="dot d7">🦊</span>
       </div>
     </div>
 
-    <div class="card card-green">
-      <p>Найдено: 7 человек.</p>
-      <p>Обнаружен архив воспоминаний.</p>
+    <div class="card">
+      <p>Найдено: <b class="pink">7 человек</b>.</p>
+      <p>Статус: лучший круг.</p>
+      <br>
+      <p>Анализ связей...</p>
       <div class="progress"><div></div></div>
     </div>
 
@@ -196,153 +170,131 @@ function renderSearchGroup() {
   `);
 }
 
-function renderMemoriesFound() {
+function renderMemories() {
   setScreen(`
-    ${stepLabel(6, "архив воспоминаний")}
-    <h2>Архив найден</h2>
-    <p>Восстанавливаем окружение и ключевые моменты...</p>
+    ${kicker(5, "архив воспоминаний")}
+    <h2>Лучшие моменты</h2>
+    <p>Восстановлены ключевые фотографии. Нажми на архив, чтобы приблизить.</p>
 
-    <img class="memory-photo" src="assets/memories.jpg" alt="Архив воспоминаний" onclick="openZoom()">
+    <img class="memories-image" src="assets/memories.jpg" alt="Архив воспоминаний" onclick="openZoom()">
 
     <div class="card">
-      <p>Обнаружено: <span class="yellow">много фотографий</span>.</p>
+      <p>Обнаружено: много фотографий.</p>
       <p>Найдено: 7 человек.</p>
-      <p>Уровень воспоминаний: критически высокий.</p>
-      <br>
-      <p class="pink">Нажми на фото, чтобы приблизить и рассмотреть детали.</p>
+      <p>Уровень воспоминаний: максимальный.</p>
     </div>
 
-    <button class="btn btn-pink" onclick="openZoom()">Приблизить фото</button>
+    <button class="btn btn-ghost" onclick="openZoom()">Приблизить фото</button>
+    <button class="btn" onclick="next()">Смотреть дальше</button>
+  `);
+}
+
+function renderAchievements() {
+  setScreen(`
+    ${kicker(6, "достижения")}
+    <h2>Достижения Альберта</h2>
+
+    <div class="achievements">
+      ${achievement("🏆", "Выжил к 27", "легенда")}
+      ${achievement("🌸", "Главный персонаж", "легенда")}
+      ${achievement("🎭", "Мастер приключений", "легенда")}
+      ${achievement("📸", "Генератор воспоминаний", "эпично")}
+      ${achievement("🫶", "Душа компании", "легенда")}
+      ${achievement("✨", "Человек, которого приятно знать", "бесценно")}
+    </div>
+
+    <div class="card card-soft">
+      <p>Уровень легендарности: <b class="pink">MAX</b></p>
+      <div class="progress"><div></div></div>
+    </div>
+
     <button class="btn" onclick="next()">Продолжить</button>
   `);
 }
 
-function renderAnalysisDone() {
+function renderSecretFile() {
   setScreen(`
-    ${stepLabel(7, "анализ завершен")}
-    <h2>Анализ завершен</h2>
+    ${kicker(7, "секретный файл")}
+    <h2>Секретный файл</h2>
 
-    <div class="card">
-      <p>Вывод системы:</p>
+    <div class="secret-folder"></div>
+
+    <div class="card center">
+      <p>Найден файл:</p>
+      <p class="pink"><b>ALBERT_27_SECRET.DAT</b></p>
       <br>
-      <p>Альберт является причиной множества крутых моментов, смеха, дичи и воспоминаний.</p>
-      <br>
-      <p>Ценность для вселенной: неизмеримо высокая.</p>
-      <br>
-      <p>Рекомендуется: поздравить, обнять, угостить и радовать.</p>
+      <p>Доступ ограничен.</p>
+      <p>Требуется подтверждение дружбы.</p>
     </div>
 
-    <div class="cat">🐱✨</div>
-
-    <button class="btn" onclick="next()">Все в порядке!</button>
-  `);
-}
-
-function renderAgeError() {
-  setScreen(`
-    ${stepLabel(8, "сбой возраста")}
-    <h2 class="red glitch">Ошибка!</h2>
-
-    <div class="card alert-card">
-      <p>Возраст откатить невозможно.</p>
-      <br>
-      <p class="red">Причина: День рождения 24.05 🎂</p>
-      <br>
-      <p>Обнаружено автоматическое повышение уровня.</p>
-      <p>Альберт успешно перешел на версию 27.0.</p>
-      <br>
-      <p>Решение: принять поздравления, подарки и внимание.</p>
-    </div>
-
-    <div class="cat">🐾</div>
-
-    <button class="btn btn-red" onclick="next()">Понятно</button>
+    <button class="btn" onclick="next()">Подтвердить дружбу</button>
+    <button class="btn btn-ghost" onclick="next()">Не сейчас</button>
   `);
 }
 
 function renderPatch() {
   setScreen(`
-    ${stepLabel(9, "загрузка патча")}
-    <h2>Загрузка праздничного патча</h2>
-    <p>Устанавливаем улучшения для именинника...</p>
+    ${kicker(8, "загрузка патча")}
+    <h2>Праздничный патч</h2>
+    <p>Устанавливаем улучшения для именинника.</p>
 
-    <div class="card card-green">
-      ${meter("Удача", 100)}
-      ${meter("Деньги", 100)}
-      ${meter("Здоровье", 100)}
-      ${meter("Настроение", 100)}
+    <div class="card card-soft">
+      ${meter("Яркие идеи", 100)}
+      ${meter("Крепкое здоровье", 100)}
       ${meter("Энергия", 100)}
-      ${meter("Любовь близких", 100)}
+      ${meter("Настроение", 100)}
+      ${meter("Друзья рядом", 100)}
+      ${meter("Новые приключения", 100)}
       ${meter("Защита от проблем", 100)}
     </div>
 
-    <div class="card center">
-      <p class="yellow">Установка завершена!</p>
+    <div class="card card-success center">
+      <p><b>Установка завершена.</b></p>
       <p>Праздничный протокол активирован.</p>
-    </div>
-
-    <button class="btn" onclick="next()">Перезагрузить систему</button>
-  `);
-}
-
-function renderSystemRestored() {
-  setScreen(`
-    ${stepLabel(10, "система восстановлена")}
-    <h2>Система восстановлена</h2>
-
-    <div class="cat">✅🐱</div>
-
-    <div class="card center">
-      <p>Все модули работают в нормальном режиме.</p>
-      <br>
-      <p>Праздничный протокол активирован.</p>
-      <p>Дата: 24 мая.</p>
-      <p>Пользователь: Альберт.</p>
-      <p>Версия: 27.0.</p>
     </div>
 
     <button class="btn" onclick="next()">Открыть поздравление</button>
   `);
 }
 
-function renderCongrats() {
+function renderFinal() {
   startConfetti();
   setScreen(`
-    ${stepLabel(11, "поздравление")}
-    <div class="final-title">С днем<br>рождения!</div>
-    <div class="cake">🎂</div>
+    ${kicker(9, "финальное пожелание")}
+    <h2 class="final-title title-gradient">С днем рождения, Альберт!</h2>
+    <p class="center">24 мая • 27 лет</p>
+
+    <img class="final-image" src="assets/final_card.png" alt="С днем рождения, Альберт">
 
     <div class="card center">
-      <p class="yellow">Альберт, легенда, оставайся собой!</p>
-      <p class="jp">お誕生日おめでとう</p>
+      <p>Поздравление подготовлено и доставлено.</p>
+      <br>
+      <p class="pink"><b>Спасибо, что ты есть! ❤️</b></p>
     </div>
 
-    <button class="btn" onclick="next()">Открыть пожелание</button>
+    <button class="btn" onclick="next()">Принять подарок</button>
   `);
 }
 
-function renderWish() {
+function renderDelivered() {
   startConfetti();
   setScreen(`
-    ${stepLabel(12, "финальное пожелание")}
-    <h2>Альберт, с 27-летием!</h2>
+    ${kicker(10, "конец протокола")}
+    <h2 class="title-gradient">Поздравление доставлено</h2>
 
-    <div class="card">
-      <p>Желаю тебе денег больше, чем проблем.</p>
-      <p>Настроения всегда на максималке.</p>
-      <p>Здоровья крепкого.</p>
-      <p>Энергии бесконечной.</p>
-      <p>Друзей верных.</p>
-      <p>Приключений незабываемых.</p>
+    <div class="hero-scene"></div>
+
+    <div class="card center">
+      <p>Статус: принято сердцем.</p>
       <br>
-      <p>Пусть каждый день будет как праздник, а жизнь как лучшая игра.</p>
+      <p>Альберт официально стал на 1 уровень мощнее.</p>
       <br>
-      <p class="yellow">Спасибо, что ты есть! ❤️</p>
+      <p class="pink"><b>С днем рождения!</b></p>
     </div>
 
     <div class="music-row">
       <button class="btn" onclick="restart()">Заново</button>
-      <button class="btn btn-pink" onclick="toggleMusic()">Музыка</button>
+      <button class="btn btn-ghost" onclick="toggleMusic()">Музыка</button>
     </div>
   `);
 }
@@ -350,22 +302,25 @@ function renderWish() {
 function meter(label, value) {
   return `
     <div class="row">
-      <span>${label}</span>
-      <div class="bar"><div class="fill" style="--w:${value}%"></div></div>
-      <span>${value}%</span>
+      <strong>${label}</strong>
+      <b>${value}%</b>
+      <div class="meter"><div style="--w:${value}%"></div></div>
     </div>
   `;
 }
 
-function typeText(text, id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  let i = 0;
-  const timer = setInterval(() => {
-    el.textContent = text.slice(0, i);
-    i += 1;
-    if (i > text.length) clearInterval(timer);
-  }, 22);
+function achievement(icon, text, rank) {
+  return `
+    <div class="achievement">
+      <span>${icon}</span>
+      <b>${text}</b>
+      <small>${rank}</small>
+    </div>
+  `;
+}
+
+function wish(icon, text) {
+  return `<div class="wish-line"><span>${icon}</span><p>${text}</p></div>`;
 }
 
 async function ensureMusic() {
@@ -509,7 +464,7 @@ function startConfetti() {
   resizeConfetti();
   if (state.runningConfetti) return;
   state.runningConfetti = true;
-  state.confetti = Array.from({ length: 140 }, () => ({
+  state.confetti = Array.from({ length: 160 }, () => ({
     x: Math.random() * window.innerWidth,
     y: Math.random() * -window.innerHeight,
     r: 4 + Math.random() * 7,
@@ -517,7 +472,7 @@ function startConfetti() {
     vx: -1.5 + Math.random() * 3,
     rot: Math.random() * Math.PI,
     vr: -.12 + Math.random() * .24,
-    color: ["#68ff7c", "#ffe08a", "#ff4d6d", "#ffffff", "#ff8ccf", "#8ff6ff"][Math.floor(Math.random() * 6)]
+    color: ["#ff8bc6", "#ffc2df", "#ffe08a", "#8ff6ff", "#ffffff"][Math.floor(Math.random() * 5)]
   }));
   requestAnimationFrame(drawConfetti);
 }
