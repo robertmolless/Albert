@@ -1,4 +1,5 @@
 const screen = document.getElementById("screen");
+const birthdayMusic = document.getElementById("birthdayMusic");
 const confettiCanvas = document.getElementById("confetti");
 const ctx = confettiCanvas.getContext("2d");
 
@@ -6,10 +7,12 @@ const state = {
   step: 0,
   confetti: [],
   runningConfetti: false,
-  audioCtx: null,
-  musicEnabled: false,
-  musicTimers: []
+  musicEnabled: false
 };
+
+if (birthdayMusic) {
+  birthdayMusic.volume = 0.45;
+}
 
 const steps = [
   renderStart,
@@ -38,8 +41,8 @@ function setScreen(html) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function next() {
-  if (!state.musicEnabled) playMusic();
+async function next() {
+  await ensureMusic();
   state.step = Math.min(state.step + 1, steps.length - 1);
   steps[state.step]();
 }
@@ -66,7 +69,7 @@ function renderStart() {
     </div>
 
     <button class="btn" onclick="next()">Начать диагностику</button>
-    <button class="btn btn-small" onclick="toggleMusic()">Музыка: включить</button>
+    <button class="btn btn-small" id="musicBtn" onclick="toggleMusic()">Музыка: включить</button>
   `);
 }
 
@@ -149,11 +152,13 @@ function renderSearchGroup() {
         <span class="dot d3"></span>
         <span class="dot d4"></span>
         <span class="dot d5"></span>
+        <span class="dot d6"></span>
+        <span class="dot d7"></span>
       </div>
     </div>
 
     <div class="card">
-      <p>Найдено: 6 человек.</p>
+      <p>Найдено: 7 человек.</p>
       <p>Уровень хаоса: выше среднего.</p>
       <div class="progress"><div></div></div>
     </div>
@@ -193,7 +198,7 @@ function renderAnalysisDone() {
       <br>
       <p>Ценность для вселенной: неизмеримо высокая.</p>
       <br>
-      <p>Рекомендуется: поздравлять, обнять, угостить и радовать.</p>
+      <p>Рекомендуется: поздравить, обнять, угостить и радовать.</p>
     </div>
 
     <div class="hero-icon">✅</div>
@@ -285,7 +290,7 @@ function renderWish() {
     <div class="card">
       <p>Альберт, с 27-летием!</p>
       <br>
-      <p>Желаем тебе денег больше, чем проблем.</p>
+      <p>Желаю тебе денег больше, чем проблем.</p>
       <p>Настроения всегда на максималке.</p>
       <p>Здоровья крепкого.</p>
       <p>Энергии бесконечной.</p>
@@ -325,91 +330,42 @@ function typeText(text, id) {
   }, 22);
 }
 
-function toggleMusic() {
+async function ensureMusic() {
+  if (!state.musicEnabled && birthdayMusic) {
+    try {
+      birthdayMusic.currentTime = 0;
+      await birthdayMusic.play();
+      state.musicEnabled = true;
+      updateMusicButton();
+    } catch (error) {
+      state.musicEnabled = false;
+    }
+  }
+}
+
+async function toggleMusic() {
+  if (!birthdayMusic) return;
+
   if (state.musicEnabled) {
-    stopMusic();
+    birthdayMusic.pause();
+    state.musicEnabled = false;
   } else {
-    playMusic();
-  }
-}
-
-function playMusic() {
-  stopMusic();
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-
-  const audioCtx = new AudioContext();
-  state.audioCtx = audioCtx;
-  state.musicEnabled = true;
-
-  const melody = [
-    ["G4", .35], ["G4", .2], ["A4", .5], ["G4", .5], ["C5", .5], ["B4", .9],
-    ["G4", .35], ["G4", .2], ["A4", .5], ["G4", .5], ["D5", .5], ["C5", .9],
-    ["G4", .35], ["G4", .2], ["G5", .5], ["E5", .5], ["C5", .5], ["B4", .5], ["A4", .9],
-    ["F5", .35], ["F5", .2], ["E5", .5], ["C5", .5], ["D5", .5], ["C5", 1.1]
-  ];
-
-  let time = audioCtx.currentTime + .05;
-  const tempoGap = .04;
-
-  function scheduleOnce(startOffset = 0) {
-    let t = audioCtx.currentTime + .05 + startOffset;
-    melody.forEach(([note, duration]) => {
-      makeTone(noteFreq(note), t, duration * .9);
-      t += duration + tempoGap;
-    });
-    return t - audioCtx.currentTime;
+    try {
+      await birthdayMusic.play();
+      state.musicEnabled = true;
+    } catch (error) {
+      state.musicEnabled = false;
+      alert("Нажми еще раз, iPhone иногда блокирует первый запуск звука.");
+    }
   }
 
-  const loopDuration = scheduleOnce(0);
-  const loop = () => {
-    if (!state.musicEnabled) return;
-    scheduleOnce(0);
-    const timer = setTimeout(loop, loopDuration * 1000);
-    state.musicTimers.push(timer);
-  };
-
-  const timer = setTimeout(loop, loopDuration * 1000);
-  state.musicTimers.push(timer);
+  updateMusicButton();
 }
 
-function stopMusic() {
-  state.musicEnabled = false;
-  state.musicTimers.forEach(clearTimeout);
-  state.musicTimers = [];
-  if (state.audioCtx) {
-    state.audioCtx.close().catch(() => {});
-    state.audioCtx = null;
-  }
-}
-
-function makeTone(freq, start, duration) {
-  const audioCtx = state.audioCtx;
-  if (!audioCtx) return;
-
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-
-  osc.type = "triangle";
-  osc.frequency.setValueAtTime(freq, start);
-
-  gain.gain.setValueAtTime(0, start);
-  gain.gain.linearRampToValueAtTime(.08, start + .025);
-  gain.gain.linearRampToValueAtTime(.055, start + duration * .75);
-  gain.gain.linearRampToValueAtTime(0, start + duration);
-
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-  osc.start(start);
-  osc.stop(start + duration + .04);
-}
-
-function noteFreq(note) {
-  const notes = {
-    C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88,
-    C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99
-  };
-  return notes[note] || 440;
+function updateMusicButton() {
+  const btn = document.getElementById("musicBtn");
+  if (!btn) return;
+  btn.textContent = state.musicEnabled ? "Музыка: выключить" : "Музыка: включить";
 }
 
 function resizeConfetti() {
