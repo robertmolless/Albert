@@ -531,7 +531,6 @@ function renderPatch() {
       ${meter("🛡️", t("protection"), 100)}
     </div>
     <div class="cat-wrap"><img class="cat-img" src="${state.lang === 'jp' ? 'assets/group_cat_model_jp.webp?v=17' : 'assets/group_cat_model_ru_v2.webp?v=19'}" alt="Patch"></div>
-    <div class="card center"><p><b class="neon-green">${t("installed")}</b></p><p>${t("active")}</p></div>
     <button class="btn" onclick="next()">${t("openGreeting")}</button>
   `);
 }
