@@ -3,24 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#07030f">
+  <meta name="theme-color" content="#05070d">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Albert 27">
-  <title>Поздравление для Альберта</title>
+  <title>С Днём Рождения, Альберт!</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="bg"></div>
-  <div class="stars"></div>
-  <div class="sakura"></div>
+  <div class="petals" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
   <audio id="birthdayMusic" src="assets/happy_birthday.mp3" preload="auto" loop playsinline></audio>
 
   <main id="screen" class="screen"></main>
 
   <div id="zoomModal" class="zoom-modal" aria-hidden="true">
-    <button class="zoom-close" onclick="closeZoom()">Закрыть</button>
-    <div class="zoom-help">Разводи пальцы для увеличения. Перетаскивай фото.</div>
+    <div class="zoom-top">
+      <button class="zoom-close" onclick="closeZoom()">Закрыть</button>
+      <div class="zoom-help">Разводи пальцы для увеличения</div>
+    </div>
     <div id="zoomStage" class="zoom-stage">
       <img id="zoomImage" src="assets/memories.jpg" alt="Архив воспоминаний">
     </div>
