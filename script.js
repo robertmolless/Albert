@@ -153,7 +153,7 @@ function renderProfile() {
     <h2 class="neon-green">Личность найдена!</h2>
 
     <div class="image-frame">
-      <img class="profile-img" src="assets/profile.png?v=9" alt="Альберт">
+      <img class="profile-img" src="assets/profile.webp?v=10" alt="Альберт">
     </div>
 
     <div class="card card-pink">
@@ -205,7 +205,7 @@ function renderMemories() {
     <h2 class="neon-green">Окружение обнаружено!</h2>
 
     <div class="image-frame">
-      <img class="memory-img" src="assets/memories.jpg?v=9" alt="Архив воспоминаний" onclick="openZoom()">
+      <img class="memory-img" src="assets/memories.webp?v=10" alt="Архив воспоминаний" onclick="openZoom()">
     </div>
 
     <div class="card card-red">
@@ -293,7 +293,7 @@ function renderAgeError() {
     </div>
 
     <div class="cat-wrap">
-      <img class="cat-img small" src="assets/error_cat.png?v=9" alt="Ошибка">
+      <img class="cat-img small" src="assets/error_cat.webp?v=10" alt="Ошибка">
     </div>
 
     <button class="btn btn-red" onclick="next()">Понятно</button>
@@ -317,7 +317,7 @@ function renderPatch() {
     </div>
 
     <div class="cat-wrap">
-      <img class="cat-img" src="assets/group_cat.png?v=9" alt="Праздничный патч">
+      <img class="cat-img" src="assets/group_cat.webp?v=10" alt="Праздничный патч">
     </div>
 
     <div class="card center">
@@ -335,7 +335,7 @@ function renderFinal() {
     ${topLine(11, "поздравление")}
 
     <div class="image-frame">
-      <img class="final-img" src="assets/final.png?v=9" alt="С днем рождения, Альберт">
+      <img class="final-img" src="assets/final.webp?v=10" alt="С днем рождения, Альберт">
     </div>
 
     <div class="card card-pink">
@@ -364,7 +364,7 @@ function renderDelivered() {
     <h2 class="gradient-title center">Поздравление доставлено</h2>
 
     <div class="cat-wrap">
-      <img class="cat-img" src="assets/success_cat.png?v=9" alt="Поздравление доставлено">
+      <img class="cat-img" src="assets/success_cat.webp?v=10" alt="Поздравление доставлено">
     </div>
 
     <div class="card center">
@@ -591,5 +591,21 @@ function drawConfetti() {
   requestAnimationFrame(drawConfetti);
 }
 
+
+function preloadImages() {
+  [
+    "assets/profile.webp?v=10",
+    "assets/final.webp?v=10",
+    "assets/memories.webp?v=10",
+    "assets/group_cat.webp?v=10",
+    "assets/success_cat.webp?v=10",
+    "assets/error_cat.webp?v=10"
+  ].forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+}
+
 window.addEventListener("resize", resizeConfetti);
 steps[0]();
+preloadImages();
